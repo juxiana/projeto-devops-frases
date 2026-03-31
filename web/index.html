@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps (Des)Motivação - TDE UniFacema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #2c1444 100%);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            color: #e0e7ff;
+        }
+
+        .quote-box {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #frase {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-weight: 300;
+            margin: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        button {
+            margin-top: 2.5rem;
+            background: #fff;
+            color: var(--primary);
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>FRASES (DES)MOTIVACIONAIS</h1>
+        <div class="quote-box">
+            <p id="frase">Carregando inspiração...</p>
+        </div>
+        <button onclick="carregarFrase()">Próxima Frase</button>
+    </div>
+
+    <div class="footer">
+        ADS 5º Período | TDE Prática DevOps | UniFacema
+    </div>
+
+    <script>
+        async function carregarFrase() {
+            const fraseElement = document.getElementById('frase');
+            fraseElement.style.opacity = 0; 
+
+            try {
+            
+                const response = await fetch('http://localhost:5000/frase');
+                const data = await response.json();
+                
+                setTimeout(() => {
+                    fraseElement.innerText = `"${data.frase}"`;
+                    fraseElement.style.opacity = 1; 
+                }, 500);
+                
+            } catch (error) {
+                console.error("Erro de conexão:", error);
+                fraseElement.innerText = "Falha ao conectar com o microserviço de frases.";
+                fraseElement.style.opacity = 1;
+            }
+        }
+
+        window.onload = carregarFrase;
+    </script>
+</body>
+</html>
