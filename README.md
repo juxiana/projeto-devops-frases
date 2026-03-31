@@ -14,9 +14,11 @@ Projeto desenvolvido para o TDE da disciplina Pr√°tica DevOps do Professor Marc√
 docker-compose up --build
 
 Acessar
-Web: http://localhost:8080
+Web: http://localhost:80
 
-API: http://localhost:3000/frases
+API: http://localhost:5000/test
+API: http://localhost:5000/frase
+
 
 # Autor #
 Juliana Santos - ADS - UNIFACEMA - Em 26/03/2026
